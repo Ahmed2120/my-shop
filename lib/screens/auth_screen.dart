@@ -137,7 +137,7 @@ class _AuthCardState extends State<AuthCard>
     }
     catch(err){
       var errMessage = 'Could not authenticate you. please try again later';
-      _showErrorDialog(errMessage);
+      _showErrorDialog(err.toString());
     }
     setState(() {
       isLoading = false;
@@ -234,11 +234,11 @@ class _AuthCardState extends State<AuthCard>
                         enabled: _authMode == AuthMode.SignUp,
                         decoration: InputDecoration(labelText: 'Confirm Password'),
                         obscureText: true,
-                        validator: (val){
-                          if(val != _passwordController){
-                            return "Password don't match";
-                          }
-                        },
+                        // validator: (val){
+                        //   if(val != _passwordController){
+                        //     return "Password don't match";
+                        //   }
+                        // },
                       ),
                     ),
                   ),
