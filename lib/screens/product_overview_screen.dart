@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/widgets/app_drawer.dart';
 
 class ProductOverview extends StatefulWidget {
   static const routeName = '/Product-overview';
@@ -14,6 +15,7 @@ class _ProductOverviewState extends State<ProductOverview> {
       appBar: AppBar(
         title: Text('My Shop'),
       ),
+      drawer: AppDrawer(),
     );
   }
 }
