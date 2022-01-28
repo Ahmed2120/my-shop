@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/providers/products.dart';
 import './providers/auth.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
@@ -26,30 +27,42 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: Auth()),
-        ChangeNotifierProvider.value(value: Orders()),
+        ChangeNotifierProxyProvider<Auth, Products>(
+            create: (_) => Products(),
+            update: (ctx, authValue, previousProducts) => previousProducts!
+              ..getData(
+                  authValue.token, authValue.userId, previousProducts.items)),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+            create: (_) => Orders(),
+            update: (ctx, authValue, previousProducts) => previousProducts!
+              ..getData(
+                  authValue.token, authValue.userId, previousProducts.items)),
         ChangeNotifierProvider.value(value: Cart()),
-        ChangeNotifierProvider.value(value: Product()),
       ],
       child: Consumer<Auth>(
-        builder:(ctx, auth, _)=> MaterialApp(
+        builder: (ctx, auth, _) => MaterialApp(
           title: 'Shop',
           theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
-            fontFamily: 'Lato'
-          ),
-          home: auth.isAuth ? ProductOverview() : FutureBuilder(
-            future: auth.tryAutoLogIn(),
-            builder: (ctx, snapshot)=> snapshot.connectionState == ConnectionState.waiting ? SplashScreen() : AuthScreen(),
-          ),
+              primarySwatch: Colors.purple,
+              accentColor: Colors.deepOrange,
+              fontFamily: 'Lato'),
+          home: auth.isAuth
+              ? ProductOverview()
+              : FutureBuilder(
+                  future: auth.tryAutoLogIn(),
+                  builder: (ctx, snapshot) =>
+                      snapshot.connectionState == ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
           routes: {
-            ProductOverview.routeName: (_)=> ProductOverview(),
-            CartScreen.routeName: (_)=> CartScreen(),
-            EditProduct.routeName: (_)=> EditProduct(),
-            OrdersScreen.routeName: (_)=> OrdersScreen(),
-            UserProduct.routeName: (_)=> UserProduct(),
-            ProductDetail.routeName: (_)=> ProductDetail(),
-            AuthScreen.routeName: (_)=> AuthScreen(),
+            ProductOverview.routeName: (_) => ProductOverview(),
+            CartScreen.routeName: (_) => CartScreen(),
+            EditProduct.routeName: (_) => EditProduct(),
+            OrdersScreen.routeName: (_) => OrdersScreen(),
+            UserProduct.routeName: (_) => UserProduct(),
+            ProductDetail.routeName: (_) => ProductDetail(),
+            AuthScreen.routeName: (_) => AuthScreen(),
           },
         ),
       ),
