@@ -23,8 +23,8 @@ class Orders with ChangeNotifier {
   String? authToken;
   String userId = '';
 
-  getData(String authToken, String userId, List<OrderItem> orders) {
-    authToken = authToken;
+  getData(String authTok, String userId, List<OrderItem> orders) {
+    authToken = authTok;
     userId = userId;
     _orders = orders;
     notifyListeners();
@@ -86,6 +86,7 @@ class Orders with ChangeNotifier {
                     })
                 .toList(),
           }));
+      print('${json.decode(res.body)}');
       _orders.insert(
           0,
           OrderItem(

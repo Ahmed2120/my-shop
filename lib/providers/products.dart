@@ -43,8 +43,8 @@ class Products with ChangeNotifier {
   String? authToken;
   String userId = '';
 
-  getData(String authToken, String userId, List<Product> products) {
-    authToken = authToken;
+  getData(String authTok, String userId, List<Product> products) {
+    authToken = authTok;
     userId = userId;
     _items = products;
     notifyListeners();
