@@ -22,16 +22,21 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.shop),
             onTap: ()=> Navigator.of(context).pushReplacementNamed('/'),
           ),
+          Divider(),
           ListTile(
             title: Text('Orders'),
             leading: Icon(Icons.payment),
             onTap: ()=> Navigator.of(context).pushReplacementNamed(OrdersScreen.routeName),
           ),
+          Divider(),
           ListTile(
             title: Text('Manage Product'),
             leading: Icon(Icons.edit),
             onTap: ()=> Navigator.of(context).pushReplacementNamed(UserProduct.routeName),
           ),
+          Divider(),
+          Spacer(),
+          Divider(),
           ListTile(
             title: Text('Logout'),
             leading: Icon(Icons.exit_to_app),
@@ -41,6 +46,7 @@ class AppDrawer extends StatelessWidget {
               Provider.of<Auth>(context, listen: false).logout();
             },
           ),
+          Divider(),
         ],
       ),
     );
