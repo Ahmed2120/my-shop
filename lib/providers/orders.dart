@@ -51,19 +51,19 @@ class Orders with ChangeNotifier {
           id: orderId,
           amount: orderData['amount'],
           dateTime: DateTime.parse(orderData['dateTime']),
-          products: (orderData['products'])
+          products: (orderData['products'] as List<dynamic>)
               .map((item) => CartItem(
                     id: item['id'],
                     title: item['title'],
-                    quantity: item['quantity'],
+                    quantity: item['quantity'] as int,
                     price: item['price'],
-                  ))
-              .toList(),
+                  )).toList(),
         ));
         _orders = loadedOrders.reversed.toList();
         notifyListeners();
       });
     } catch (e) {
+      print(e);
       throw e;
     }
   }
